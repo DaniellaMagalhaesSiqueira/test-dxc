@@ -35,8 +35,8 @@ public class ClientService {
 	        existClient.setFirstName(client.getFirstName());
 	        existClient.setLastName(client.getLastName());
 	        existClient.setBirthDate(client.getBirthDate());
-	        existClient.setEmail(client.getEmail());
 	        existClient.setCpf(client.getCpf());
+	        existClient.setEmail(client.getEmail());
 	        return clientRepository.save(existClient);
 	    }
 	 

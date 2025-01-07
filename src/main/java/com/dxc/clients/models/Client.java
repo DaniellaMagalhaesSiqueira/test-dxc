@@ -9,10 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -41,18 +43,26 @@ public class Client implements Serializable {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthDate;
 
+
+    @Column(unique = true)
+    @NotNull(message = "CPF cannot be null.")
+    @NotEmpty(message = "CPF cannot be empty.")
+    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF should be valid: XXX.XXX.XXX-XX")
+    private String cpf;
+    
     @Column(unique = true)
     @NotNull(message = "Email cannot be null.")
     @NotEmpty(message = "Email cannot be empty.")
     @Email(message = "Email should be valid.", regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}")
     private String email;
-
-    @Column(unique = true)
-    @NotNull(message = "CPF cannot be null.")
-    @NotEmpty(message = "CPF cannot be empty.")
-    @CPF(message = "CPF should be valid.")
-    private String cpf;
     
+    @AssertTrue(message = "CPF should be valid: XXX.XXX.XXX-XX")
+    public boolean isCpfValid() {
+        if (cpf == null) {
+            return false;
+        }
+        return cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}");
+    }
 
 	public Long getClientId() {
 		return clientId;
@@ -86,13 +96,6 @@ public class Client implements Serializable {
 		this.birthDate = birthDate;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 	public String getCpf() {
 		return cpf;
@@ -100,6 +103,14 @@ public class Client implements Serializable {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }
