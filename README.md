@@ -16,3 +16,25 @@ Desenvolvido em Java 11, com Spring Boot versão 2.7.18 compatível com a versã
 * Exceções Personalizadas: Exceção Personalizada para as classes Controller apenas como demonstração de customização de mensagens de estouro de exceções.
 * Spring Security: Authenticação com Spring Secutiry usando configuração simplificada para testes com user e password cadastrados no application.properties para facilitar testes com a ferramenta postman usando Basic Auth
 * Spring Test: Para testes de integração com o Spring Boot contendo em sua biblioteca JUnit, Mockito, entre outras.
+
+# Postman
+
+Os testes no postman foram executados utilizando senha e usuários cadastrados no application.properties:
+```
+spring.security.user.name=user
+spring.security.user.password=123456
+```
+<img src="images/postman_auth.png" style="width: 800px;">
+
+Testes prontos:
+Post -> localhost:8082/clients 
+Porta alterada para não interferir em outros projetos
+```
+{
+  "firstName": "Jhon",
+  "lastName" : "Do",
+  "birthDate" : "10-02-1999",
+  "email": "jhonny@mail.com",
+  "cpf": "739.482.357-16"
+}
+```
